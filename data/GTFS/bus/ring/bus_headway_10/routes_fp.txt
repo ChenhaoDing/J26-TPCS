@@ -1,0 +1,3 @@
+route_id,route_short_name,route_desc
+5,bus-ring-left,bus
+6,bus-ring-right,bus
