@@ -1,0 +1,5 @@
+route_id,route_short_name,route_desc
+1,bus-basic-we-left,bus
+2,bus-basic-ns-left,bus
+3,bus-basic-we-right,bus
+4,bus-basic-ns-right,bus
