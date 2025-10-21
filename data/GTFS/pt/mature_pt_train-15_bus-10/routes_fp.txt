@@ -1,0 +1,12 @@
+route_id,route_short_name,route_desc
+1,bus-basic-we-left,bus
+2,bus-basic-ns-left,bus
+3,bus-basic-we-right,bus
+4,bus-basic-ns-right,bus
+7,bus-diagonal-sw-left,bus
+8,bus-diagonal-se-left,bus
+9,bus-diagonal-sw-right,bus
+10,bus-diagonal-se-right,bus
+5,bus-ring-left,bus
+6,bus-ring-right,bus
+0,Intercity Express,Train

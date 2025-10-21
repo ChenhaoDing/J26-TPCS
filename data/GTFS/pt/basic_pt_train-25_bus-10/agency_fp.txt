@@ -1,0 +1,5 @@
+agency_id,agency_name
+0,intercity-express
+1,bus-basic
+2,bus-ring
+3,bus-diagonal
