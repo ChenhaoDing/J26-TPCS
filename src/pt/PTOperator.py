@@ -11,7 +11,8 @@ except ImportError as e:
     from cpp_pt_router.PyPTRouter import PyPTRouter
 
 class PTOperator:
-    def __init__(self, fp_gtfs_dir: str):
+    def __init__(self, fp_gtfs_dir: str, print_logs: bool=True):
+        self.print_logs = print_logs
         # initialize the pt router
         self.pt_router = None
         self._initialize_pt_router(fp_gtfs_dir)
@@ -20,9 +21,10 @@ class PTOperator:
         self.stations_fp_df = self._load_stations_from_gtfs(fp_gtfs_dir)
         self.street_station_transfers_fp_df = self._load_street_station_transfers_from_gtfs(fp_gtfs_dir)
 
-        print("PT operator initialized successfully.")
+        if self.print_logs:
+            print("PT operator initialized successfully.")
 
-    def _initialize_pt_router(self, fp_gtfs_dir: str):
+    def _initialize_pt_router(self, fp_gtfs_dir: str,):
         """This method initializes the PT router.
 
         Args:
@@ -45,10 +47,13 @@ class PTOperator:
             if not os.path.exists(os.path.join(fp_gtfs_dir, file)):
                 raise FileNotFoundError(f"The file {file} does not exist in the directory {fp_gtfs_dir}.")
 
+
         # initialize the pt router with the given gtfs data
-        print(f"Initializing the PT router with the given GTFS data in the directory: {fp_gtfs_dir}")
+        if self.print_logs:
+            print(f"Initializing the PT router with the given GTFS data in the directory: {fp_gtfs_dir}")
         self.pt_router = PyPTRouter(fp_gtfs_dir)
-        print("PT router initialized successfully.")
+        if self.print_logs:
+            print("PT router initialized successfully.")
 
     def _load_stations_from_gtfs(self, fp_gtfs_dir: str) -> pd.DataFrame:
         """This method will load the stations from the GTFS data.
@@ -110,10 +115,42 @@ class PTOperator:
         included_sources = self._get_included_stops_and_transfer_times(source_station_id)
         included_targets = self._get_included_stops_and_transfer_times(target_station_id)
 
-        print(f"Finding fastest PT journey from station {source_station_id} to station {target_station_id} at {arrival_datetime} with max transfers {max_transfers} and detailed={detailed}")
+        if self.print_logs:
+            print(f"Finding fastest PT journey from station {source_station_id} to station {target_station_id} at {arrival_datetime} with max transfers {max_transfers} and detailed={detailed}")
         
         return self.pt_router.return_fastest_pt_journey_1to1(arrival_datetime, included_sources, included_targets, max_transfers, detailed)
     
+    def return_fastest_pt_journey_xtox(
+        self,
+        source_station_ids: list[str],
+        target_station_ids: list[str],
+        arrival_datetime: datetime,  # all source stations share the same arrival time
+        max_transfers: int=999,
+        detailed: bool=False,
+    ) -> tp.Union[tp.Dict[str, tp.Any], None]:
+        
+        # Call the router to find the fastest journey for each combination of source and target stations
+        fastest_journeys = {}
+        for source_station_id in source_station_ids:
+            for target_station_id in target_station_ids:
+                journey = self.return_fastest_pt_journey_1to1(
+                    str(source_station_id),
+                    str(target_station_id),
+                    arrival_datetime,
+                    max_transfers,
+                    detailed
+                )
+                if journey:
+                    fastest_journeys[(source_station_id, target_station_id)] = journey
+
+        # Return the fastest journey found and corresponding source/target station IDs or None if no journey is found
+        if fastest_journeys:
+            # Find the overall fastest journey
+            overall_fastest_journey = min(fastest_journeys.values(), key=lambda x: x['duration'])
+            selected_source_station_id, selected_target_station_id = next(k for k, v in fastest_journeys.items() if v == overall_fastest_journey)
+            return overall_fastest_journey, selected_source_station_id, selected_target_station_id
+        return None
+   
     def _get_included_stops_and_transfer_times(self, station_id: str) -> tp.Tuple[tp.List[str], tp.List[int]]:
         """This method will return the included stops and transfer times for a given station.
 

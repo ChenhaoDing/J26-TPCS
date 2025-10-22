@@ -1,4 +1,4 @@
-start,end,rq_time,rq_type,subnetwork,request_id,start_station_street_ids,end_station_street_ids,walk_start_to_station_street_distance,walk_start_to_station_street_tt,walk_station_to_end_street_distance,walk_station_to_end_street_tt,station_street_arrival_time
+start,end,rq_time,rq_type,subnetwork,request_id,start_station_street_ids,end_station_street_ids,walk_start_to_station_street_distance,walk_start_to_station_street_tt,walk_station_to_end_street_distance,walk_station_to_end_street_tt,start_station_street_arrival_time
 92,117,5280,intra,left,0,[60],[117],1500,1127,0,0,6407
 22,65,4260,intra,left,1,[54],[57],1500,1127,500,375,5387
 40,113,11040,intra,left,2,[38; 58],[110],1000,751,1500,1127,11791
