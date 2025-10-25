@@ -1,2 +1,7 @@
 *.db
 *.DS_Store
+amod_request_level_analysis_results.csv
+all_amod_request_level_analysis_results.csv
+
+amod_scenario_level_analysis_results.csv
+all_amod_scenario_level_analysis_results.csv
