@@ -10,10 +10,10 @@ from src.analysis.amod import process_amod_scenario_level_stats
 
 # Variables
 # Train Headway (min)
-train_headway_list = [i for i in range(10, 31, 5)]
+train_headway_list = [10, 20, 30]
 
 # MoD Fleet Size
-mod_fleet_size_list = [i for i in range(30, 151, 20)]
+mod_fleet_size_list = [30, 50, 70, 90, 110, 130, 150]
 
 # MaaS Platform Communication Strategy
 maas_communication_strategy_list = ['default', 'TPCS']
@@ -24,12 +24,12 @@ random_seed_list = [3, 6, 9]
 # MoD Waiting Time Threshold (s)
 mod_waiting_time_threshold_list = [300, 600, 900]
 # MoD Detour Time Threshold (%)
-mod_detour_time_threshold_list = [i for i in range(30, 101, 20)]
+mod_detour_time_threshold_list = [30, 60, 90]
 
 # Demand Size
-demand_size_list = [i for i in range(100, 600, 50)]
+demand_size_list = [i for i in range(100, 1001, 100)]
 # Demand Split Ratio (Intra Modal, %)
-demand_split_ratio_list = [i for i in range(10, 91, 20)]
+demand_split_ratio_list = [0, 20, 40, 60, 80]
 
 # Total Simulation Time (s)
 total_sim_time = [0, 10800]  # 3 hours
