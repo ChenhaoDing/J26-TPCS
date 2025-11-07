@@ -75,3 +75,239 @@ def expand_timetable(base_trip_data, study_start_str, study_end_str, headway_min
     # Add 0 to trip_id for base trip
     expanded_df.loc[expanded_df['trip_id'] == base_trip_id, 'trip_id'] = f"{base_trip_id}-0"
     return expanded_df
+
+
+def create_basic_bus_schedule(
+    bb_stop_time, bb_hub_stop_time, bb_transfer_stop_time, 
+    TRAIN_ARRIVAL_TIME, TRAIN_DEPARTURE_TIME, BUS_DRIVE_TIME
+):
+    bb_hub_arrival_time = (TRAIN_ARRIVAL_TIME + TRAIN_DEPARTURE_TIME) / 2 - bb_hub_stop_time / 2
+    bb_hub_departure_time = bb_hub_arrival_time + bb_hub_stop_time
+
+    bb_117_departure_time = bb_hub_arrival_time - BUS_DRIVE_TIME 
+    bb_117_arrival_time = bb_117_departure_time - bb_stop_time
+
+    bb_57_departure_time = bb_117_arrival_time - BUS_DRIVE_TIME
+    bb_57_arrival_time = bb_57_departure_time - bb_stop_time
+
+    bb_56_departure_time = bb_57_arrival_time - BUS_DRIVE_TIME
+    bb_56_arrival_time = bb_56_departure_time - bb_transfer_stop_time
+
+    bb_55_departure_time = bb_56_arrival_time - BUS_DRIVE_TIME
+    bb_55_arrival_time = bb_55_departure_time - bb_stop_time
+
+    bb_54_departure_time = bb_55_arrival_time - BUS_DRIVE_TIME
+
+    bb_118_arrival_time = bb_hub_departure_time + BUS_DRIVE_TIME
+    bb_118_departure_time = bb_118_arrival_time + bb_stop_time
+
+    bb_58_arrival_time = bb_118_departure_time + BUS_DRIVE_TIME
+    bb_58_departure_time = bb_58_arrival_time + bb_stop_time
+
+    bb_59_arrival_time = bb_58_departure_time + BUS_DRIVE_TIME
+    bb_59_departure_time = bb_59_arrival_time + bb_transfer_stop_time
+
+    bb_60_arrival_time = bb_59_departure_time + BUS_DRIVE_TIME
+    bb_60_departure_time = bb_60_arrival_time + bb_stop_time
+
+    bb_61_arrival_time = bb_60_departure_time + BUS_DRIVE_TIME
+
+    arrival_times = [
+        bb_55_arrival_time, bb_56_arrival_time, bb_57_arrival_time, 
+        bb_117_arrival_time, bb_hub_arrival_time, bb_118_arrival_time, 
+        bb_58_arrival_time, bb_59_arrival_time, bb_60_arrival_time, bb_61_arrival_time
+    ]
+
+    departure_times = [
+        bb_54_departure_time, bb_55_departure_time, bb_56_departure_time, bb_57_departure_time,
+        bb_117_departure_time, bb_hub_departure_time, bb_118_departure_time, 
+        bb_58_departure_time, bb_59_departure_time, bb_60_departure_time, 
+    ]
+
+    # Convert seconds to HH:MM:SS format
+    arrival_times = [str(timedelta(seconds=int(at))) for at in arrival_times]
+    departure_times = [str(timedelta(seconds=int(dt))) for dt in departure_times]
+    
+    return arrival_times, departure_times
+
+def create_diagonal_bus_schedule(
+    bb_stop_time, bb_hub_stop_time,
+    TRAIN_ARRIVAL_TIME, TRAIN_DEPARTURE_TIME, BUS_DRIVE_TIME
+):
+    bb_hub_arrival_time = (TRAIN_ARRIVAL_TIME + TRAIN_DEPARTURE_TIME) / 2 - bb_hub_stop_time / 2
+    bb_hub_departure_time = bb_hub_arrival_time + bb_hub_stop_time
+
+    bb_119_departure_time = bb_hub_arrival_time - BUS_DRIVE_TIME 
+    bb_119_arrival_time = bb_119_departure_time - bb_stop_time
+
+    bb_66_departure_time = bb_119_arrival_time - BUS_DRIVE_TIME
+    bb_66_arrival_time = bb_66_departure_time - bb_stop_time
+
+    bb_76_departure_time = bb_66_arrival_time - BUS_DRIVE_TIME
+    bb_76_arrival_time = bb_76_departure_time - bb_stop_time
+
+    bb_75_departure_time = bb_76_arrival_time - BUS_DRIVE_TIME
+    bb_75_arrival_time = bb_75_departure_time - bb_stop_time
+
+    bb_86_departure_time = bb_75_arrival_time - BUS_DRIVE_TIME
+    bb_86_arrival_time = bb_86_departure_time - bb_stop_time
+
+    bb_85_departure_time = bb_86_arrival_time - BUS_DRIVE_TIME
+    bb_85_arrival_time = bb_85_departure_time - bb_stop_time
+
+    bb_96_departure_time = bb_85_arrival_time - BUS_DRIVE_TIME
+    bb_96_arrival_time = bb_96_departure_time - bb_stop_time
+
+    bb_95_departure_time = bb_96_arrival_time - BUS_DRIVE_TIME
+    bb_95_arrival_time = bb_95_departure_time - bb_stop_time
+
+    bb_105_departure_time = bb_95_arrival_time - BUS_DRIVE_TIME
+
+    bb_116_arrival_time = bb_hub_departure_time + BUS_DRIVE_TIME
+    bb_116_departure_time = bb_116_arrival_time + bb_stop_time
+
+    bb_49_arrival_time = bb_116_departure_time + BUS_DRIVE_TIME
+    bb_49_departure_time = bb_49_arrival_time + bb_stop_time
+
+    bb_39_arrival_time = bb_49_departure_time + BUS_DRIVE_TIME
+    bb_39_departure_time = bb_39_arrival_time + bb_stop_time
+
+    bb_40_arrival_time = bb_39_departure_time + BUS_DRIVE_TIME
+    bb_40_departure_time = bb_40_arrival_time + bb_stop_time
+
+    bb_29_arrival_time = bb_40_departure_time + BUS_DRIVE_TIME
+    bb_29_departure_time = bb_29_arrival_time + bb_stop_time
+
+    bb_30_arrival_time = bb_29_departure_time + BUS_DRIVE_TIME
+    bb_30_departure_time = bb_30_arrival_time + bb_stop_time
+
+    bb_19_arrival_time = bb_30_departure_time + BUS_DRIVE_TIME
+    bb_19_departure_time = bb_19_arrival_time + bb_stop_time
+
+    bb_20_arrival_time = bb_19_departure_time + BUS_DRIVE_TIME
+    bb_20_departure_time = bb_20_arrival_time + bb_stop_time
+
+    bb_9_arrival_time = bb_20_departure_time + BUS_DRIVE_TIME
+    bb_9_departure_time = bb_9_arrival_time + bb_stop_time
+
+    bb_10_arrival_time = bb_9_departure_time + BUS_DRIVE_TIME
+
+    arrival_times = [
+        bb_95_arrival_time, bb_96_arrival_time, bb_85_arrival_time, bb_86_arrival_time,
+        bb_75_arrival_time, bb_76_arrival_time, bb_66_arrival_time, bb_119_arrival_time,
+        bb_hub_arrival_time, bb_116_arrival_time, bb_49_arrival_time, bb_39_arrival_time,
+        bb_40_arrival_time, bb_29_arrival_time, bb_30_arrival_time, bb_19_arrival_time,
+        bb_20_arrival_time, bb_9_arrival_time, bb_10_arrival_time
+    ]
+
+    departure_times = [
+        bb_105_departure_time,
+        bb_95_departure_time, bb_96_departure_time, bb_85_departure_time, bb_86_departure_time,
+        bb_75_departure_time, bb_76_departure_time, bb_66_departure_time, bb_119_departure_time,
+        bb_hub_departure_time, bb_116_departure_time, bb_49_departure_time, bb_39_departure_time,
+        bb_40_departure_time, bb_29_departure_time, bb_30_departure_time, bb_19_departure_time,
+        bb_20_departure_time, bb_9_departure_time
+    ]
+
+    # Convert seconds to HH:MM:SS format
+    arrival_times = [str(timedelta(seconds=int(at))) for at in arrival_times]
+    departure_times = [str(timedelta(seconds=int(dt))) for dt in departure_times]
+
+    return arrival_times, departure_times
+
+
+def create_ring_bus_schedule(rb_56_departure_time, rb_stop_time, rb_transfer_stop_time, BUS_DRIVE_TIME):
+    rb_64_arrival_time = rb_56_departure_time + BUS_DRIVE_TIME
+    rb_64_departure_time = rb_64_arrival_time + rb_stop_time
+
+    rb_74_arrival_time = rb_64_departure_time + BUS_DRIVE_TIME
+    rb_74_departure_time = rb_74_arrival_time + rb_stop_time
+
+    rb_85_arrival_time = rb_74_departure_time + BUS_DRIVE_TIME
+    rb_85_departure_time = rb_85_arrival_time + rb_stop_time
+
+    rb_86_arrival_time = rb_85_departure_time + BUS_DRIVE_TIME
+    rb_86_departure_time = rb_86_arrival_time + rb_stop_time
+
+    rb_87_arrival_time = rb_86_departure_time + BUS_DRIVE_TIME
+    rb_87_departure_time = rb_87_arrival_time + rb_stop_time
+
+    rb_88_arrival_time = rb_87_departure_time + BUS_DRIVE_TIME
+    rb_88_departure_time = rb_88_arrival_time + rb_transfer_stop_time
+
+    rb_89_arrival_time = rb_88_departure_time + BUS_DRIVE_TIME
+    rb_89_departure_time = rb_89_arrival_time + rb_stop_time
+
+    rb_90_arrival_time = rb_89_departure_time + BUS_DRIVE_TIME
+    rb_90_departure_time = rb_90_arrival_time + rb_stop_time
+
+    rb_91_arrival_time = rb_90_departure_time + BUS_DRIVE_TIME
+    rb_91_departure_time = rb_91_arrival_time + rb_stop_time
+
+    rb_80_arrival_time = rb_91_departure_time + BUS_DRIVE_TIME
+    rb_80_departure_time = rb_80_arrival_time + rb_stop_time
+
+    rb_69_arrival_time = rb_80_departure_time + BUS_DRIVE_TIME
+    rb_69_departure_time = rb_69_arrival_time + rb_stop_time
+
+    rb_59_arrival_time = rb_69_departure_time + BUS_DRIVE_TIME
+    rb_59_departure_time = rb_59_arrival_time + rb_transfer_stop_time
+
+    rb_51_arrival_time = rb_59_departure_time + BUS_DRIVE_TIME
+    rb_51_departure_time = rb_51_arrival_time + rb_stop_time
+
+    rb_41_arrival_time = rb_51_departure_time + BUS_DRIVE_TIME
+    rb_41_departure_time = rb_41_arrival_time + rb_stop_time
+
+    rb_30_arrival_time = rb_41_departure_time + BUS_DRIVE_TIME
+    rb_30_departure_time = rb_30_arrival_time + rb_stop_time
+
+    rb_29_arrival_time = rb_30_departure_time + BUS_DRIVE_TIME
+    rb_29_departure_time = rb_29_arrival_time + rb_stop_time
+
+    rb_28_arrival_time = rb_29_departure_time + BUS_DRIVE_TIME
+    rb_28_departure_time = rb_28_arrival_time + rb_stop_time
+
+    rb_27_arrival_time = rb_28_departure_time + BUS_DRIVE_TIME
+    rb_27_departure_time = rb_27_arrival_time + rb_transfer_stop_time
+
+    rb_26_arrival_time = rb_27_departure_time + BUS_DRIVE_TIME
+    rb_26_departure_time = rb_26_arrival_time + rb_stop_time
+
+    rb_25_arrival_time = rb_26_departure_time + BUS_DRIVE_TIME
+    rb_25_departure_time = rb_25_arrival_time + rb_stop_time
+
+    rb_24_arrival_time = rb_25_departure_time + BUS_DRIVE_TIME
+    rb_24_departure_time = rb_24_arrival_time + rb_stop_time
+
+    rb_35_arrival_time = rb_24_departure_time + BUS_DRIVE_TIME
+    rb_35_departure_time = rb_35_arrival_time + rb_stop_time
+
+    rb_46_arrival_time = rb_35_departure_time + BUS_DRIVE_TIME
+    rb_46_departure_time = rb_46_arrival_time + rb_stop_time
+
+    rb_56_arrival_time = rb_46_departure_time + BUS_DRIVE_TIME
+
+    arrival_times = [
+        rb_64_arrival_time, rb_74_arrival_time, rb_85_arrival_time,
+        rb_86_arrival_time, rb_87_arrival_time, rb_88_arrival_time, rb_89_arrival_time,
+        rb_90_arrival_time, rb_91_arrival_time, rb_80_arrival_time, rb_69_arrival_time,
+        rb_59_arrival_time, rb_51_arrival_time, rb_41_arrival_time, rb_30_arrival_time,
+        rb_29_arrival_time, rb_28_arrival_time, rb_27_arrival_time, rb_26_arrival_time,
+        rb_25_arrival_time, rb_24_arrival_time, rb_35_arrival_time, rb_46_arrival_time,rb_56_arrival_time
+    ]
+
+    departure_times = [
+        rb_56_departure_time, rb_64_departure_time, rb_74_departure_time, rb_85_departure_time,
+        rb_86_departure_time, rb_87_departure_time, rb_88_departure_time, rb_89_departure_time,
+        rb_90_departure_time, rb_91_departure_time, rb_80_departure_time, rb_69_departure_time,
+        rb_59_departure_time, rb_51_departure_time, rb_41_departure_time, rb_30_departure_time,
+        rb_29_departure_time, rb_28_departure_time, rb_27_departure_time, rb_26_departure_time,
+        rb_25_departure_time, rb_24_departure_time, rb_35_departure_time, rb_46_departure_time,
+    ]
+
+    # Convert seconds to HH:MM:SS format
+    arrival_times = [str(timedelta(seconds=int(at))) for at in arrival_times]
+    departure_times = [str(timedelta(seconds=int(dt))) for dt in departure_times]
+
+    return arrival_times, departure_times
