@@ -67,7 +67,7 @@ node_id,closest_station_id,street_station_transfer_time
 117,117,60
 118,118,60
 119,119,60
-120,A,60
+120,MH-L,60
 121,121,60
 126,126,60
 130,130,60
@@ -136,4 +136,4 @@ node_id,closest_station_id,street_station_transfer_time
 238,238,60
 239,239,60
 240,240,60
-241,B,60
+241,MH-R,60

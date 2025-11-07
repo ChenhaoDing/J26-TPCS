@@ -161,7 +161,10 @@ def create_diagonal_bus_schedule(
     bb_95_departure_time = bb_96_arrival_time - BUS_DRIVE_TIME
     bb_95_arrival_time = bb_95_departure_time - bb_stop_time
 
-    bb_105_departure_time = bb_95_arrival_time - BUS_DRIVE_TIME
+    bb_106_departure_time = bb_95_arrival_time - BUS_DRIVE_TIME
+    bb_106_arrival_time = bb_106_departure_time - bb_stop_time
+
+    bb_105_departure_time = bb_106_arrival_time - BUS_DRIVE_TIME
 
     bb_116_arrival_time = bb_hub_departure_time + BUS_DRIVE_TIME
     bb_116_departure_time = bb_116_arrival_time + bb_stop_time
@@ -193,15 +196,16 @@ def create_diagonal_bus_schedule(
     bb_10_arrival_time = bb_9_departure_time + BUS_DRIVE_TIME
 
     arrival_times = [
-        bb_95_arrival_time, bb_96_arrival_time, bb_85_arrival_time, bb_86_arrival_time,
+        bb_106_arrival_time, bb_95_arrival_time, bb_96_arrival_time, bb_85_arrival_time, bb_86_arrival_time,
         bb_75_arrival_time, bb_76_arrival_time, bb_66_arrival_time, bb_119_arrival_time,
         bb_hub_arrival_time, bb_116_arrival_time, bb_49_arrival_time, bb_39_arrival_time,
         bb_40_arrival_time, bb_29_arrival_time, bb_30_arrival_time, bb_19_arrival_time,
-        bb_20_arrival_time, bb_9_arrival_time, bb_10_arrival_time
+        bb_20_arrival_time, bb_9_arrival_time, 
+        bb_10_arrival_time
     ]
 
     departure_times = [
-        bb_105_departure_time,
+        bb_105_departure_time, bb_106_departure_time,
         bb_95_departure_time, bb_96_departure_time, bb_85_departure_time, bb_86_departure_time,
         bb_75_departure_time, bb_76_departure_time, bb_66_departure_time, bb_119_departure_time,
         bb_hub_departure_time, bb_116_departure_time, bb_49_departure_time, bb_39_departure_time,

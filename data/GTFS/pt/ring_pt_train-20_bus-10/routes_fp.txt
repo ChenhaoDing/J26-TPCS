@@ -5,4 +5,4 @@ route_id,route_short_name,route_desc
 4,bus-basic-ns-right,bus
 5,bus-ring-left,bus
 6,bus-ring-right,bus
-0,Intercity Express,Train
+0,train,train

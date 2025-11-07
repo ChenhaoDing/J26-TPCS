@@ -9,4 +9,4 @@ route_id,route_short_name,route_desc
 10,bus-diagonal-se-right,bus
 5,bus-ring-left,bus
 6,bus-ring-right,bus
-0,Intercity Express,Train
+0,train,train
