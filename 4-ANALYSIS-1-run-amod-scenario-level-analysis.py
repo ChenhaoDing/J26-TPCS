@@ -65,7 +65,7 @@ def process_scenario(scenario_params, amod_fleetpy_simulation_output_folder, tim
     results_dict['random_seed'] = random_seed
     results_dict['fleet_size'] = fleet_size 
     results_dict['demand_size'] = demand_size
-    results_dict['demand_split_ratio'] = demand_split_ratio
+    results_dict['intra_ratio'] = demand_split_ratio
     results_dict['broker_type'] = broker_type
     results_dict['op_max_detour_time_factor'] = op_max_detour_time_factor
     results_dict['op_max_wait_time'] = op_max_wait_time

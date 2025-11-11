@@ -312,4 +312,14 @@ def _process_amod_scenario_level_amod_request_stats(request_level_stats_df: pd.D
     average_pt_waiting_time = served_requests_df["pt_waiting_time"].mean()
     results_dict["average_pt_waiting_time"] = average_pt_waiting_time
 
+    # Average inter-city journey time
+    served_intercity_requests_df = served_requests_df[served_requests_df["rq_type"] == "inter"]
+    average_intercity_journey_time = served_intercity_requests_df["total_journey_time"].mean()
+    results_dict["average_intercity_journey_time"] = average_intercity_journey_time
+
+    # Average intra-city journey time
+    served_intracity_requests_df = served_requests_df[served_requests_df["rq_type"] == "intra"]
+    average_intracity_journey_time = served_intracity_requests_df["total_journey_time"].mean()
+    results_dict["average_intracity_journey_time"] = average_intracity_journey_time
+
     return results_dict
