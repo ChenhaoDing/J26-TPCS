@@ -19,3 +19,7 @@ __pycache__/
 .vscode/
 .idea/
 *~
+
+# ignore big files
+all_mobility_hub_boarding_records.csv
+all_mobility_hub_boarding_records.pkl

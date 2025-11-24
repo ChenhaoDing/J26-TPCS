@@ -304,9 +304,29 @@ def _process_amod_scenario_level_amod_request_stats(request_level_stats_df: pd.D
     average_amod_service_rate = num_served_requests / num_requests if num_requests > 0 else 0.0
     results_dict["average_amod_service_rate"] = average_amod_service_rate
 
+    # Average Intercity service rate
+    intercity_requests_df = request_level_stats_df[request_level_stats_df["rq_type"] == "inter"]
+    num_intercity_requests = intercity_requests_df.shape[0]
+    served_intercity_requests_df = intercity_requests_df[intercity_requests_df["served_by_amod"] == 1]
+    num_served_intercity_requests = served_intercity_requests_df.shape[0]
+    average_intercity_service_rate = num_served_intercity_requests / num_intercity_requests if num_intercity_requests > 0 else 0.0
+    results_dict["average_intercity_service_rate"] = average_intercity_service_rate
+
+    # Average Intracity service rate
+    intracity_requests_df = request_level_stats_df[request_level_stats_df["rq_type"] == "intra"]
+    num_intracity_requests = intracity_requests_df.shape[0]
+    served_intracity_requests_df = intracity_requests_df[intracity_requests_df["served_by_amod"] == 1]
+    num_served_intracity_requests = served_intracity_requests_df.shape[0]
+    average_intracity_service_rate = num_served_intracity_requests / num_intracity_requests if num_intracity_requests > 0 else 0.0
+    results_dict["average_intracity_service_rate"] = average_intracity_service_rate
+
     # Average journey time
     average_journey_time = served_requests_df["total_journey_time"].mean()
     results_dict["average_journey_time"] = average_journey_time
+
+    # Average journey time extended
+    average_journey_time_extended = request_level_stats_df["total_journey_time"].mean()
+    results_dict["average_journey_time_extended"] = average_journey_time_extended
 
     # Average PT waiting time
     average_pt_waiting_time = served_requests_df["pt_waiting_time"].mean()
@@ -317,9 +337,19 @@ def _process_amod_scenario_level_amod_request_stats(request_level_stats_df: pd.D
     average_intercity_journey_time = served_intercity_requests_df["total_journey_time"].mean()
     results_dict["average_intercity_journey_time"] = average_intercity_journey_time
 
+    # Average inter-city journey time extended
+    served_intercity_requests_extended_df = request_level_stats_df[request_level_stats_df["rq_type"] == "inter"]
+    average_intercity_journey_time_extended = served_intercity_requests_extended_df["total_journey_time"].mean()
+    results_dict["average_intercity_journey_time_extended"] = average_intercity_journey_time_extended
+
     # Average intra-city journey time
     served_intracity_requests_df = served_requests_df[served_requests_df["rq_type"] == "intra"]
     average_intracity_journey_time = served_intracity_requests_df["total_journey_time"].mean()
     results_dict["average_intracity_journey_time"] = average_intracity_journey_time
+
+    # Average intra-city journey time extended
+    served_intracity_requests_extended_df = request_level_stats_df[request_level_stats_df["rq_type"] == "intra"]
+    average_intracity_journey_time_extended = served_intracity_requests_extended_df["total_journey_time"].mean()
+    results_dict["average_intracity_journey_time_extended"] = average_intracity_journey_time_extended
 
     return results_dict
